@@ -1,0 +1,32 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+class SimuladorRed:
+    def __init__(self, grafo):
+        self.grafo = grafo
+
+    def desconectar_enlace(self, nodo_a, nodo_b):
+        if self.grafo.has_edge(nodo_a, nodo_b):
+            print(f"Desconectando enlace entre {nodo_a} y {nodo_b}")
+            self.grafo.remove_edge(nodo_a, nodo_b)
+        else:
+            print(f"No se pudo desconectar el enlace entre {nodo_a} y {nodo_b}. Enlace inexistente.")
+
+    def visualizar_red(self):
+        pos = nx.spring_layout(self.grafo)
+        nx.draw(self.grafo, pos, with_labels=True, font_weight='bold')
+        plt.show()
+
+# Crear una topología de red de ejemplo
+grafo_ejemplo = nx.Graph()
+grafo_ejemplo.add_edges_from([(1, 2), (2, 3), (3, 4), (4, 1)])
+
+# Inicializar el simulador con la topología de red
+simulador = SimuladorRed(grafo_ejemplo)
+
+# Visualizar la red inicial
+simulador.visualizar_red()
+
+# Desconectar un enlace y visualizar la red resultante
+simulador.desconectar_enlace(1, 2)
+simulador.visualizar_red()
